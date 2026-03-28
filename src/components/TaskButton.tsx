@@ -1,6 +1,6 @@
 type TaskButtonProps = {
 	children: React.ReactNode;
-};
+} & React.ComponentProps<"button">;
 
 export function TaskButton({ children }: TaskButtonProps) {
 	return (

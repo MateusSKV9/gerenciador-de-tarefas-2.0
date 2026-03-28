@@ -1,5 +1,16 @@
 import { Task } from "@/components/Task";
-import { TaskButton } from "@/components/TaskButton";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -68,10 +79,28 @@ export default function Home() {
 									Tarefas concluídas ({qttCompleted}/{tasks.length})
 								</span>
 							</div>
-							<Button className="cursor-pointer" variant={"outline"}>
-								<Trash size={18} />
-								<span>Limpar tarefas concluídas</span>
-							</Button>
+							<AlertDialog>
+								<AlertDialogTrigger asChild>
+									<Button className="cursor-pointer" variant={"outline"}>
+										<Trash size={18} />
+										<span>Limpar tarefas concluídas</span>
+									</Button>
+								</AlertDialogTrigger>
+
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle>Tem certeza que deseja excluir {tasks.length} itens?</AlertDialogTitle>
+										<AlertDialogDescription>
+											This action cannot be undone. This will permanently delete your account from our servers.
+										</AlertDialogDescription>
+									</AlertDialogHeader>
+
+									<AlertDialogFooter>
+										<AlertDialogAction>Sim</AlertDialogAction>
+										<AlertDialogCancel>Cancelar</AlertDialogCancel>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>{" "}
 						</div>
 
 						<Progress value={percentual} />

@@ -1,15 +1,22 @@
 import { Task } from "@/components/Task";
+import { TaskButton } from "@/components/TaskButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Plus, List, Check, CircleDot } from "lucide-react";
+import { Plus, List, Check, CircleDot, ListTodo, Trash, Sigma } from "lucide-react";
 
 const tasks = [
 	{ id: 1, title: "Estudar React.js", completed: true },
 	{ id: 2, title: "Estudar Next.js", completed: false },
+	{ id: 3, title: "Estudar Prisma", completed: false },
 ];
+
+const qttCompleted = tasks.filter((task) => task.completed).length;
+
+const percentual = tasks.length > 0 ? Math.round(Math.max(0, (qttCompleted / tasks.length) * 100)) : 0;
 
 export default function Home() {
 	return (
@@ -52,6 +59,28 @@ export default function Home() {
 							<Task key={task.id} title={task.title} completed={task.completed} />
 						))}
 					</ul>
+
+					<div className="flex flex-col gap-2.5">
+						<div className="flex justify-between mt-2">
+							<div className="flex items-center gap-1">
+								<ListTodo size={18} />
+								<span>
+									Tarefas concluídas ({qttCompleted}/{tasks.length})
+								</span>
+							</div>
+							<Button className="cursor-pointer" variant={"outline"}>
+								<Trash size={18} />
+								<span>Limpar tarefas concluídas</span>
+							</Button>
+						</div>
+
+						<Progress value={percentual} />
+
+						<div className="flex gap-0.5 justify-end items-center">
+							<Sigma size={18} />
+							<span className="text-xs">{tasks.length} tarefas no total</span>
+						</div>
+					</div>
 				</CardContent>
 			</Card>
 		</main>

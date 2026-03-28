@@ -1,9 +1,15 @@
+import { Task } from "@/components/Task";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Plus, List, Check, CircleDot } from "lucide-react";
+
+const tasks = [
+	{ id: 1, title: "Estudar React.js", completed: true },
+	{ id: 2, title: "Estudar Next.js", completed: false },
+];
 
 export default function Home() {
 	return (
@@ -21,7 +27,7 @@ export default function Home() {
 					</Button>
 				</CardHeader>
 
-				<CardContent>
+				<CardContent className="flex flex-col gap-2">
 					<Separator className="mb-2" />
 
 					<div className="flex gap-2">
@@ -30,7 +36,7 @@ export default function Home() {
 							Todas
 						</Badge>
 
-						<Badge variant={"secondary"} className="text-sm p-3 pt-3.5 pb-3.5cursor-pointer">
+						<Badge variant={"secondary"} className="text-sm p-3 pt-3.5 pb-3.5 cursor-pointer">
 							<CircleDot size={18} />
 							Não finalizadas
 						</Badge>
@@ -40,6 +46,12 @@ export default function Home() {
 							Concluídas
 						</Badge>
 					</div>
+
+					<ul className="flex flex-col gap-2 list-inside list-none">
+						{tasks.map((task) => (
+							<Task key={task.id} title={task.title} completed={task.completed} />
+						))}
+					</ul>
 				</CardContent>
 			</Card>
 		</main>

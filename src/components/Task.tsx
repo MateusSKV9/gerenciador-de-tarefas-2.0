@@ -1,9 +1,6 @@
-import { SquarePen, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { TaskButton } from "./TaskButton";
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { EditTask } from "./EditTask";
 
 type TaskProps = {
 	title: string;
@@ -20,23 +17,7 @@ export function Task({ title, completed }: TaskProps) {
 			<span className="font-semibold">{title}</span>
 
 			<div className="flex  gap-2">
-				<Dialog>
-					<DialogTrigger>
-						<TaskButton title="Editar">
-							<SquarePen size={18} />
-						</TaskButton>
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Editar tarefa</DialogTitle>
-						</DialogHeader>
-
-						<div className="flex gap-2">
-							<Input placeholder="Editar tarefa" />
-							<Button>Editar</Button>
-						</div>
-					</DialogContent>
-				</Dialog>
+				<EditTask />
 
 				<TaskButton title="Excluir">
 					<Trash2 size={18} />

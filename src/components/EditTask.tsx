@@ -8,9 +8,9 @@ export function EditTask() {
 	return (
 		<Dialog>
 			<DialogTrigger>
-				<TaskButton title="Editar">
-					<SquarePen size={18} />
-				</TaskButton>
+				<SquarePen size={18} />
+				{/* <TaskButton title="Editar">
+				</TaskButton> */}
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>

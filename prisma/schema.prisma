@@ -9,7 +9,7 @@ datasource db {
 }
         
 model Tasks {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   title     String   
   done      Boolean  @default(false)
 }

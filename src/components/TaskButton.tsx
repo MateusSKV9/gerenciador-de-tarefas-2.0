@@ -2,12 +2,13 @@ type TaskButtonProps = {
 	children: React.ReactNode;
 } & React.ComponentProps<"button">;
 
-export function TaskButton({ children }: TaskButtonProps) {
+export function TaskButton({ children, ...props }: TaskButtonProps) {
 	return (
 		<button
 			className={`bg-black rounded-sm text-white p-1.5 cursor-pointer hover:-translate-y-0.5 transition-all hover:bg-primary`}
 			type="button"
 			title="Deletar"
+			{...props}
 		>
 			{children}
 		</button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, List, CircleDot, Check, ListTodo, Trash, Sigma } from "lucide-react";
+import { List, CircleDot, Check, ListTodo, Trash, Sigma } from "lucide-react";
 
 import { Task } from "./Task";
 import {
@@ -20,6 +20,8 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import { Progress } from "./ui/progress";
+import { createTask } from "@/actions/create-task";
+import { SubmitButton } from "./SubmitButton";
 
 type TaskType = {
 	id: string;
@@ -36,12 +38,12 @@ type TaskListProps = {
 export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListProps) {
 	return (
 		<Card className="w-2xl">
-			<CardHeader className="flex gap-2">
-				<Input className="p-4" type="text" placeholder="Adicionar tarefa" />
-				<Button className="cursor-pointer" variant={"default"}>
-					<Plus />
-					Cadastrar
-				</Button>
+			<CardHeader>
+				<form action={createTask} className="flex gap-2">
+					<Input id="title" name="title" className="p-4" type="text" placeholder="Adicionar tarefa" />
+
+					<SubmitButton />
+				</form>
 			</CardHeader>
 
 			<CardContent className="flex flex-col gap-2">
@@ -67,7 +69,7 @@ export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListPro
 				{initialTasks.length > 0 ? (
 					<ul className="flex flex-col gap-2 list-inside list-none">
 						{initialTasks.map((task) => (
-							<Task key={task.id} title={task.title} completed={task.done} />
+							<Task key={task.id} id={task.id} title={task.title} completed={task.done} />
 						))}
 					</ul>
 				) : (

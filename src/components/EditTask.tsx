@@ -1,5 +1,4 @@
 import { SquarePen } from "lucide-react";
-import { TaskButton } from "./TaskButton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -7,12 +6,10 @@ import { Button } from "./ui/button";
 export function EditTask() {
 	return (
 		<Dialog>
-			<DialogTrigger>
+			<DialogTrigger className="bg-black text-white p-2 rounded-sm hover:bg-primary cursor-pointer transition-all hover:-translate-y-0.5">
 				<SquarePen size={18} />
-				{/* <TaskButton title="Editar">
-				</TaskButton> */}
 			</DialogTrigger>
-			<DialogContent>
+			<DialogContent aria-describedby={undefined}>
 				<DialogHeader>
 					<DialogTitle>Editar tarefa</DialogTitle>
 				</DialogHeader>

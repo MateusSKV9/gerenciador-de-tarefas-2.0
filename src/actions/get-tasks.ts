@@ -3,10 +3,13 @@
 import { prisma } from "@/lib/prisma";
 
 export async function getTasks() {
-	const tasks = await prisma.tasks.findMany();
+	try {
+		const tasks = await prisma.tasks.findMany();
 
-	if (!tasks) return;
-
-	console.log(tasks);
-	return tasks;
+		console.log(tasks);
+		return tasks;
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 }

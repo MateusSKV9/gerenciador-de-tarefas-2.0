@@ -64,11 +64,15 @@ export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListPro
 					</Badge>
 				</div>
 
-				<ul className="flex flex-col gap-2 list-inside list-none">
-					{initialTasks.map((task) => (
-						<Task key={task.id} title={task.title} completed={task.done} />
-					))}
-				</ul>
+				{initialTasks.length > 0 ? (
+					<ul className="flex flex-col gap-2 list-inside list-none">
+						{initialTasks.map((task) => (
+							<Task key={task.id} title={task.title} completed={task.done} />
+						))}
+					</ul>
+				) : (
+					<p>Lista vazia.</p>
+				)}
 
 				<div className="flex flex-col gap-2.5">
 					<div className="flex justify-between mt-2">
@@ -90,7 +94,7 @@ export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListPro
 								<AlertDialogHeader>
 									<AlertDialogTitle>Tem certeza que deseja excluir {initialTasks.length} itens?</AlertDialogTitle>
 									<AlertDialogDescription>
-										This action cannot be undone. This will permanently delete your account from our servers.
+										Essa ação apagará todos os itens marcados como concluído.
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 

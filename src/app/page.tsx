@@ -1,8 +1,8 @@
+import { getTasks } from "@/actions/get-tasks";
 import { TaskList } from "@/components/TaskList";
-import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
-	const tasks = await prisma.tasks.findMany();
+	const tasks = await getTasks();
 
 	const qttCompleted = tasks.filter((task) => task.done).length;
 

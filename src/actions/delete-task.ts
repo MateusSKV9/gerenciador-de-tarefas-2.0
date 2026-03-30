@@ -5,13 +5,14 @@ import { revalidatePath } from "next/cache";
 
 export async function deleteTask(id: string) {
 	try {
-		await prisma.tasks.delete({
+		const deletedTask = await prisma.tasks.delete({
 			where: {
 				id: id,
 			},
 		});
 
 		revalidatePath("/");
+		console.log(deletedTask);
 	} catch (error) {
 		console.error(error);
 	}

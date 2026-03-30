@@ -2,13 +2,23 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { Tasks } from "../../generated/prisma/client";
 
-export async function createTask(formData: FormData) {
+export type ActionResponse = {
+	data?: Tasks;
+	success: boolean;
+	message: string;
+};
+
+export async function createTask(formData: FormData): Promise<ActionResponse> {
 	const title = String(formData.get("title"));
-	if (!title || title.trim() === "") return;
+
+	if (!title || title.trim() === "") {
+		return { success: false, message: "Tarefa inválida!" };
+	}
 
 	try {
-		await prisma.tasks.create({
+		const newTask = await prisma.tasks.create({
 			data: {
 				title: title,
 				done: false,
@@ -16,7 +26,10 @@ export async function createTask(formData: FormData) {
 		});
 
 		revalidatePath("/");
+		console.log(newTask);
+		return { success: true, data: newTask, message: "Tarefa adicionada com sucesso!" };
 	} catch (error) {
 		console.error(error);
+		return { success: false, message: "Erro ao estabelecer conexão!" };
 	}
 }

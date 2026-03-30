@@ -4,6 +4,9 @@ import { Trash2 } from "lucide-react";
 import { TaskButton } from "./TaskButton";
 import { EditTask } from "./EditTask";
 import { deleteTask } from "@/actions/delete-task";
+import { toggleTaskStatus } from "@/actions/toggle-task-status";
+import { toast } from "sonner";
+import { useFormStatus } from "react-dom";
 
 type TaskProps = {
 	id: string;
@@ -12,8 +15,14 @@ type TaskProps = {
 };
 
 export function Task({ id, title, completed }: TaskProps) {
+	const { pending } = useFormStatus();
+
 	const handleDelete = async () => {
 		await deleteTask(id);
+	};
+
+	const handleToggleStatus = async () => {
+		await toggleTaskStatus(id, completed);
 	};
 
 	return (
@@ -22,10 +31,12 @@ export function Task({ id, title, completed }: TaskProps) {
 				completed ? "border-l-green-400" : "border-l-red-400"
 			}`}
 		>
-			<span className="font-semibold">{title}</span>
+			<span onClick={handleToggleStatus} className="font-semibold cursor-pointer hover:text-primary">
+				{title}
+			</span>
 
 			<div className="flex  gap-2">
-				<EditTask />
+				<EditTask id={id} title={title} />
 
 				<TaskButton onClick={handleDelete} title="Excluir">
 					<Trash2 size={18} />

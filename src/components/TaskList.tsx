@@ -22,6 +22,8 @@ import { Separator } from "./ui/separator";
 import { Progress } from "./ui/progress";
 import { createTask } from "@/actions/create-task";
 import { SubmitButton } from "./SubmitButton";
+import { toast } from "sonner";
+import { useState } from "react";
 
 type TaskType = {
 	id: string;
@@ -35,13 +37,25 @@ type TaskListProps = {
 	qttCompleted: number;
 };
 
+type categoryListType = "all" | "completed" | "uncompleted";
+
 export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListProps) {
+	const sortedTasks = [...initialTasks].sort((a, b) => Number(a.done) - Number(b.done));
+
+	const handleAction = async (formData: FormData) => {
+		const result = await createTask(formData);
+
+		if (result.success) toast.success(result.message);
+		else toast.error(result.message);
+	};
+
+	const [categoryList, setCategoryList] = useState<categoryListType>("all");
+
 	return (
 		<Card className="w-2xl">
 			<CardHeader>
-				<form action={createTask} className="flex gap-2">
+				<form action={handleAction} className="flex gap-2">
 					<Input id="title" name="title" className="p-4" type="text" placeholder="Adicionar tarefa" />
-
 					<SubmitButton />
 				</form>
 			</CardHeader>
@@ -50,25 +64,39 @@ export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListPro
 				<Separator className="mb-2" />
 
 				<div className="flex gap-2">
-					<Badge className="text-sm p-3 pt-3.5 pb-3.5 cursor-pointer">
+					<Badge
+						variant={categoryList === "all" ? "default" : "secondary"}
+						onClick={() => setCategoryList("all")}
+						className="text-sm p-3 pt-3.5 pb-3.5 cursor-pointer"
+					>
 						<List size={18} />
 						Todas
 					</Badge>
 
-					<Badge variant={"secondary"} className="text-sm p-3 pt-3.5 pb-3.5 cursor-pointer">
+					<Badge
+						onClick={() => {
+							setCategoryList("uncompleted");
+						}}
+						variant={categoryList === "uncompleted" ? "default" : "secondary"}
+						className="text-sm p-3 pt-3.5 pb-3.5 cursor-pointer"
+					>
 						<CircleDot size={18} />
 						Não finalizadas
 					</Badge>
 
-					<Badge variant={"secondary"} className="text-sm p-3 pt-3.5 pb-3.5 cursor-pointer">
+					<Badge
+						onClick={() => setCategoryList("completed")}
+						variant={categoryList === "completed" ? "default" : "secondary"}
+						className="text-sm p-3 pt-3.5 pb-3.5 cursor-pointer"
+					>
 						<Check size={18} />
 						Concluídas
 					</Badge>
 				</div>
 
-				{initialTasks.length > 0 ? (
+				{sortedTasks.length > 0 ? (
 					<ul className="flex flex-col gap-2 list-inside list-none">
-						{initialTasks.map((task) => (
+						{sortedTasks.map((task) => (
 							<Task key={task.id} id={task.id} title={task.title} completed={task.done} />
 						))}
 					</ul>
@@ -81,7 +109,7 @@ export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListPro
 						<div className="flex items-center gap-1">
 							<ListTodo size={18} />
 							<span>
-								Tarefas concluídas ({qttCompleted}/{initialTasks.length})
+								Tarefas concluídas ({qttCompleted}/{sortedTasks.length})
 							</span>
 						</div>
 						<AlertDialog>
@@ -94,7 +122,7 @@ export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListPro
 
 							<AlertDialogContent>
 								<AlertDialogHeader>
-									<AlertDialogTitle>Tem certeza que deseja excluir {initialTasks.length} itens?</AlertDialogTitle>
+									<AlertDialogTitle>Tem certeza que deseja excluir {sortedTasks.length} itens?</AlertDialogTitle>
 									<AlertDialogDescription>
 										Essa ação apagará todos os itens marcados como concluído.
 									</AlertDialogDescription>
@@ -112,7 +140,7 @@ export function TaskList({ initialTasks, percentual, qttCompleted }: TaskListPro
 
 					<div className="flex gap-0.5 justify-end items-center">
 						<Sigma size={18} />
-						<span className="text-xs">{initialTasks.length} tarefas no total</span>
+						<span className="text-xs">{sortedTasks.length} tarefas no total</span>
 					</div>
 				</div>
 			</CardContent>

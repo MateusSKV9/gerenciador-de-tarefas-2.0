@@ -1,6 +1,8 @@
 import { getTasks } from "@/actions/get-tasks";
 import { TaskList } from "@/components/TaskList";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
 	const tasks = await getTasks();
 

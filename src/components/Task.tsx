@@ -5,8 +5,6 @@ import { TaskButton } from "./TaskButton";
 import { EditTask } from "./EditTask";
 import { deleteTask } from "@/actions/delete-task";
 import { toggleTaskStatus } from "@/actions/toggle-task-status";
-import { toast } from "sonner";
-import { useFormStatus } from "react-dom";
 
 type TaskProps = {
 	id: string;
@@ -15,8 +13,6 @@ type TaskProps = {
 };
 
 export function Task({ id, title, completed }: TaskProps) {
-	const { pending } = useFormStatus();
-
 	const handleDelete = async () => {
 		await deleteTask(id);
 	};

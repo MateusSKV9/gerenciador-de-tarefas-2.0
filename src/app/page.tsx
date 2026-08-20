@@ -5,9 +5,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
 	const tasks = await getTasks();
-
 	const qttCompleted = tasks.filter((task) => task.done).length;
-
 	const percentual = tasks.length > 0 ? Math.round(Math.max(0, (qttCompleted / tasks.length) * 100)) : 0;
 
 	return (

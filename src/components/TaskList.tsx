@@ -1,7 +1,6 @@
 "use client";
 
 import { List, CircleDot, Check, ListTodo, Trash, Sigma } from "lucide-react";
-
 import { Task } from "./Task";
 import {
 	AlertDialogTrigger,
